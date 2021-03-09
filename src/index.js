@@ -4,22 +4,26 @@ const add = document.getElementById("add");
 const minus = document.getElementById("minus");
 const number = document.getElementsByClassName("counter");
 
+const countModifier = (state = 0, action) => {
+  if(action.type === "ADD") {
+    return state + 1;
+  }
+  else if(action.type === "MINUS") {
+    return state - 1;
+  }
+  else {
+    return state;
+  }
+};
 
-let count = 0;
+const countStore = createStore(countModifier);
+console.log(countStore)
 
-const updateText = () => {
-  number.item(0).innerText = count;
+const onChange = () => {
+  console.log("onChanged");
+  number.item(0).innerText = countStore.getState();
 }
+countStore.subscribe(onChange)
 
-const handleAdd = () => {
-  count++;
-  updateText();
-};
-
-const handleMinus = () => {
-  count--;
-  updateText();
-};
-
-add.addEventListener('click',handleAdd);
-minus.addEventListener('click',handleMinus);
+add.addEventListener("click", () => countStore.dispatch({ type:"ADD"}) )
+minus.addEventListener("click", () => countStore.dispatch({ type:"MINUS"}) )
