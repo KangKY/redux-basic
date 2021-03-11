@@ -8,6 +8,7 @@ function Detail({ toDo }) {
       <>
         <h1>{ toDo.text }</h1>
         <h5>{ toDo.id }</h5>
+        <h5>{ new Date(toDo.id).toUTCString()} </h5>
       </>
     )
   } else {
